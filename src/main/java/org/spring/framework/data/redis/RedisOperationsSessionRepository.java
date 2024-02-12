@@ -1,13 +1,10 @@
 package org.spring.framework.data.redis;
 
-import com.dt.platform.session.DTSessionData;
-import com.dt.platform.session.policy.HttpSessionMaxAgePolicy;
-import com.dt.platform.utils.http.HttpUtils;
 import org.spring.framework.session.SessionData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.session.MapSession;
-import org.springframework.session.data.ISessionOperations;
+
 
 import java.time.Duration;
 import java.time.Instant;
