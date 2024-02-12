@@ -1,0 +1,7 @@
+
+server:
+  servlet:
+    session:
+      timeout: 1800
+      cookie:
+        max-age: 1800
