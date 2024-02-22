@@ -11,6 +11,7 @@ import org.springframework.session.Session;
 import org.springframework.session.SessionRepository;
 import org.springframework.session.data.mongo.MongoIndexedSessionRepository;
 import org.springframework.session.data.mongo.SpringMongoSessionConverter;
+import org.springframework.session.data.mongo.SpringMongoSessionConverterUtil;
 
 @Slf4j
 public class MultiSessionRepository implements SessionRepository {
@@ -49,10 +50,10 @@ public class MultiSessionRepository implements SessionRepository {
 
     private void saveSessionAsSecondary(Session session) {
         if(secondarystorage &&  getSessionRepositoryBean() instanceof MongoIndexedSessionRepository ) {
-            SpringSessionData springSessionData = SpringMongoSessionConverter.convertToSessionData(session);
+            SpringSessionData springSessionData = SpringMongoSessionConverterUtil.convertToSessionData(session);
             springRedisSessionConfig.getSpringRedisOperationsSessionRepository().saveAsSecondary(springSessionData);
         }else if(secondarystorage &&  getSessionRepositoryBean() instanceof RedisIndexedSessionRepository){
-            SpringSessionData springSessionData = SpringRedisSessionConverter.convertToSessionData(session);
+            SpringSessionData springSessionData = SpringRedisSessionConverterUtil.convertToSessionData(session);
             springMongoSessionConfig.getSpringMongoOperationsSessionRepository().saveAsSecondary(springSessionData);
         }
     }
