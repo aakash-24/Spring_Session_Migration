@@ -8,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 
-public class SpringRedisSessionConverter {
+public class SpringRedisSessionConverterUtil {
 
     public static SpringSessionData convertToSessionData(Session session) {
         final RedisIndexedSessionRepository.RedisSession redisSession

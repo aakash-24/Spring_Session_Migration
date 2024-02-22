@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 @UtilityClass
-public class SpringMongoSessionConverter {
+public class SpringMongoSessionConverterUtil {
     public static SpringSessionData convertToSessionData(Session session) {
         final MongoSession s = (MongoSession) session;
         return SpringSessionData.builder().id(s.getId()).attributes(getAttributes(s))
