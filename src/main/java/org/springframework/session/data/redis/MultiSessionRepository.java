@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.session.Session;
 import org.springframework.session.SessionRepository;
 import org.springframework.session.data.mongo.MongoIndexedSessionRepository;
-import org.springframework.session.data.mongo.SpringMongoSessionConverter;
 import org.springframework.session.data.mongo.SpringMongoSessionConverterUtil;
 
 @Slf4j
