@@ -9,24 +9,10 @@ import org.springframework.session.data.ISpringSessionOperation;
 import java.util.Map;
 
 @Slf4j
-public class OpenSourceMongoOperationsSessionRepository extends MongoIndexedSessionRepository
+public class SpringSessionSaveMongoSessionAsSecondary extends MongoIndexedSessionRepository
         implements ISpringSessionOperation {
-    public OpenSourceMongoOperationsSessionRepository(MongoOperations mongoOperations) {
+    public SpringSessionSaveMongoSessionAsSecondary(MongoOperations mongoOperations) {
         super(mongoOperations);
-    }
-
-    @Override
-    public MongoSession createSession() {
-        log.debug("Going to customize session while creation.");
-        MongoSession mongoSession = new MongoSession();
-        return mongoSession;
-    }
-
-    @Override
-    public void save(MongoSession mongoSession) {
-        log.debug("Session created as primary in mongo");
-        log.info("Session created as primary in mongo");
-        super.save(mongoSession);
     }
 
     @Override

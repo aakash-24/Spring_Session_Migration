@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.session.data.mongo.AbstractMongoSessionConverter;
 import org.springframework.session.data.mongo.JdkMongoSessionConverter;
 import org.springframework.session.data.mongo.MongoIndexedSessionRepository;
-import org.springframework.session.data.mongo.OpenSourceMongoOperationsSessionRepository;
+import org.springframework.session.data.mongo.SpringSessionSaveMongoSessionAsSecondary;
 import org.springframework.util.StringUtils;
 
 import java.time.Duration;
@@ -23,7 +23,7 @@ public class SpringMongoSessionConfig {
 
     private MongoOperations mongoOperations;
 
-    private OpenSourceMongoOperationsSessionRepository openSourceMongoOperationsSessionRepository;
+    private SpringSessionSaveMongoSessionAsSecondary springSessionSaveMongoSessionAsSecondary;
 
     private MongoIndexedSessionRepository mongoIndexedSessionRepository;
 
@@ -37,14 +37,14 @@ public class SpringMongoSessionConfig {
     private AbstractMongoSessionConverter mongoSessionConverter =
             new JdkMongoSessionConverter(Duration.ofSeconds(MAX_TIME_INACTIVE_SESSION));
 
-    public OpenSourceMongoOperationsSessionRepository getSpringMongoOperationsSessionRepository() {
-        if (openSourceMongoOperationsSessionRepository != null) {
-            return openSourceMongoOperationsSessionRepository;
+    public SpringSessionSaveMongoSessionAsSecondary getSpringMongoOperationsSessionRepository() {
+        if (springSessionSaveMongoSessionAsSecondary != null) {
+            return springSessionSaveMongoSessionAsSecondary;
         }
-        OpenSourceMongoOperationsSessionRepository openSourceMongoOperationsSessionRepository
-                = new OpenSourceMongoOperationsSessionRepository(mongoOperations);
-        setMongoRepositoryParameters(openSourceMongoOperationsSessionRepository);
-        return openSourceMongoOperationsSessionRepository;
+        SpringSessionSaveMongoSessionAsSecondary springSessionSaveMongoSessionAsSecondary
+                = new SpringSessionSaveMongoSessionAsSecondary(mongoOperations);
+        setMongoRepositoryParameters(springSessionSaveMongoSessionAsSecondary);
+        return springSessionSaveMongoSessionAsSecondary;
     }
 
     public MongoIndexedSessionRepository getMongoOperationsSessionRepository() {

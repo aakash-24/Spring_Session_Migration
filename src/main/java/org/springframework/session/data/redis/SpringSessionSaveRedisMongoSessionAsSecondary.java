@@ -9,24 +9,11 @@ import org.springframework.session.data.ISpringSessionOperation;
 import java.time.Instant;
 
 @Slf4j
-public class OpenSourceRedisOperationsSessionRepository extends RedisIndexedSessionRepository implements ISpringSessionOperation {
+public class SpringSessionSaveRedisMongoSessionAsSecondary extends RedisIndexedSessionRepository implements ISpringSessionOperation {
 
-    public OpenSourceRedisOperationsSessionRepository(RedisOperations<String, Object> sessionRedisOperations) {
+    public SpringSessionSaveRedisMongoSessionAsSecondary(RedisOperations<String, Object> sessionRedisOperations) {
         super(sessionRedisOperations);
     }
-
-
-    @Override
-    public RedisSession createSession() {
-        return super.createSession();
-    }
-
-
-    @Override
-    public void save(RedisSession session) {
-        super.save(session);
-    }
-
 
     @Override
     public void saveAsSecondary(SpringSessionData springSessionData) {

@@ -12,7 +12,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.session.data.redis.RedisIndexedSessionRepository;
-import org.springframework.session.data.redis.OpenSourceRedisOperationsSessionRepository;
+import org.springframework.session.data.redis.SpringSessionSaveRedisMongoSessionAsSecondary;
 import org.springframework.session.data.redis.config.annotation.SpringSessionRedisConnectionFactory;
 import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
@@ -25,7 +25,7 @@ public class SpringRedisSessionConfig {
 
     private String redisNamespace = RedisIndexedSessionRepository.DEFAULT_NAMESPACE;
 
-    private static OpenSourceRedisOperationsSessionRepository openSourceRedisOperationsSessionRepository;
+    private static SpringSessionSaveRedisMongoSessionAsSecondary springSessionSaveRedisMongoSessionAsSecondary;
 
     private RedisSerializer<Object> defaultRedisSerializer;
 
@@ -35,15 +35,15 @@ public class SpringRedisSessionConfig {
 
     public SpringRedisSessionConfig() {}
 
-    public OpenSourceRedisOperationsSessionRepository getSpringRedisOperationsSessionRepository() {
-        if (openSourceRedisOperationsSessionRepository != null) {
-            return openSourceRedisOperationsSessionRepository;
+    public SpringSessionSaveRedisMongoSessionAsSecondary getSpringRedisOperationsSessionRepository() {
+        if (springSessionSaveRedisMongoSessionAsSecondary != null) {
+            return springSessionSaveRedisMongoSessionAsSecondary;
         }
 
         RedisIndexedSessionRepository sessionRepository = getRedisOperationsSessionRepository();
-        openSourceRedisOperationsSessionRepository =
-                new OpenSourceRedisOperationsSessionRepository(sessionRepository.getSessionRedisOperations());
-        return openSourceRedisOperationsSessionRepository;
+        springSessionSaveRedisMongoSessionAsSecondary =
+                new SpringSessionSaveRedisMongoSessionAsSecondary(sessionRepository.getSessionRedisOperations());
+        return springSessionSaveRedisMongoSessionAsSecondary;
     }
 
     public RedisIndexedSessionRepository getRedisOperationsSessionRepository() {
