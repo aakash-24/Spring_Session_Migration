@@ -26,12 +26,13 @@ public class SpringSessionSaveRedisMongoSessionAsSecondary extends RedisIndexedS
         }
         MapSession mapSession = new MapSession();
         mapSession.setId(springSessionData.getId());
-        RedisSession redisSession = new RedisSession(mapSession,false);
+        RedisSession redisSession = new RedisSession(mapSession,true);
         redisSession.setMaxInactiveInterval(springSessionData.getMaxInactiveInterval());
         redisSession.setLastAccessedTime(Instant.now());
         redisSession.setLastAccessedTime(Instant.now());
         addAttributesAndSave(springSessionData, redisSession);
         log.debug("Session created as secondary in redis");
+        log.info("Session created as secondary in redis");
     }
 
 
