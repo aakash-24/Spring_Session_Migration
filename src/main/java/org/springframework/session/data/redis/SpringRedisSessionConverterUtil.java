@@ -1,7 +1,7 @@
 package org.springframework.session.data.redis;
 
 import lombok.experimental.UtilityClass;
-import org.spring.framework.SpringSessionData;
+import org.spring.framework.data.SpringSessionData;
 import org.springframework.session.Session;
 
 import java.util.HashMap;
