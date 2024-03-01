@@ -4,11 +4,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.spring.framework.data.SpringSessionData;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.session.MapSession;
-import org.springframework.session.data.ISpringSessionOperation;
+import org.springframework.session.ISpringSessionOperation;
 import org.springframework.transaction.support.TransactionOperations;
 
 import java.time.Instant;
-import java.util.UUID;
 
 @Slf4j
 public class SpringJdbcAsSecondarySession extends JdbcIndexedSessionRepository implements ISpringSessionOperation {

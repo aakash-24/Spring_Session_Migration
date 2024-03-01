@@ -1,4 +1,4 @@
-package org.springframework.session.data;
+package org.springframework.session;
 
 import org.spring.framework.data.SpringSessionData;
 

@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.spring.framework.data.SpringSessionData;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.session.MapSession;
-import org.springframework.session.data.ISpringSessionOperation;
+import org.springframework.session.ISpringSessionOperation;
 
 import java.time.Instant;
 
