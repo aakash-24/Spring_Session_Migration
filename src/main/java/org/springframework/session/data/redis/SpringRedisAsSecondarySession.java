@@ -19,7 +19,6 @@ public class SpringRedisAsSecondarySession extends RedisIndexedSessionRepository
     @Override
     public void saveAsSecondary(SpringSessionData springSessionData) {
         log.info("Going to save session as secondary in redis");
-        log.debug("Going to save session as secondary in redis");
         RedisSession session = findById(springSessionData.getId());;
         if (session != null) {
             addAttributesAndSave(springSessionData, session);
@@ -32,7 +31,7 @@ public class SpringRedisAsSecondarySession extends RedisIndexedSessionRepository
 
         redisSession.setLastAccessedTime(Instant.now());
         addAttributesAndSave(springSessionData, redisSession);
-        log.debug("Session created as secondary in redis");
+        log.info("Session created as secondary in redis");
     }
 
 
