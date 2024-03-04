@@ -29,4 +29,5 @@ You can choose between Redis, MongoDB, and JDBC as your primary and secondary st
         1. spring.session.secondary_storage=MONGO
 3. Provide additional configuration properties for Redis, MongoDB, and JDBC connections.
 4. We can also disable the secondary storage by enabling it to false.
-        1. spring.session.secondary_storageIsEnabled=FALSE
+    1. spring.session.secondary_storageIsEnabled=FALSE
+
