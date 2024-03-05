@@ -9,6 +9,7 @@ For example:
 1. Redis is known for its speed and ability to handle large amounts of data efficiently.
 2. MongoDB is a document-oriented database that offers flexibility and scalability.
 3. JDBC provides a more traditional approach using relational databases like MySQL or PostgreSQL.
+   
 By allowing developers to choose between these options, the HTTP Session Storage Switcher aims to provide a customizable solution that can be tailored to the specific needs of each application. This flexibility ensures that developers can optimize performance and scalability while managing HTTP sessions effectively.
 
 
