@@ -50,7 +50,7 @@ public class MultiSessionRepository implements SessionRepository {
 
     @Override
     public Session createSession() {
-        log.error("Storage not configured");
+        log.debug("Storage not configured");
         log.info("Going to create session");
         return getSessionRepositoryBean().createSession();
     }
@@ -65,7 +65,7 @@ public class MultiSessionRepository implements SessionRepository {
 
 
     private void saveSessionAsSecondary(Session session) {
-        log.error("Secondary Storage is enabled but spring.session.secondary_storage is NULL ");
+        log.debug("Secondary Storage is enabled but spring.session.secondary_storage is NULL ");
         if(secondarystorageIsEnabled &&  getSessionRepositoryBean() instanceof MongoIndexedSessionRepository ) {
             if(!secondarystorage.isEmpty() && secondarystorage.equals(SpringDataStore.JDBC.name())){
                 log.info("Secondary Storage Storage is JDBC");
