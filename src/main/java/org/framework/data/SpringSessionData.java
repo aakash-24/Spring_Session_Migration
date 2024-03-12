@@ -1,4 +1,4 @@
-package org.framework;
+package org.framework.data;
 
 import lombok.*;
 

@@ -1,4 +1,4 @@
-package org.framework;
+package org.springframework.session.data.redis;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.ObjectProvider;
@@ -6,15 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
-import org.springframework.data.redis.connection.jedis.JedisConnectionFactory;
-import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.session.data.redis.RedisIndexedSessionRepository;
-import org.springframework.session.data.redis.SpringSessionSaveRedisMongoSessionAsSecondary;
 import org.springframework.session.data.redis.config.annotation.SpringSessionRedisConnectionFactory;
-import org.springframework.util.ClassUtils;
 import org.springframework.util.StringUtils;
 
 @Slf4j
@@ -25,7 +20,7 @@ public class SpringRedisSessionConfig {
 
     private String redisNamespace = RedisIndexedSessionRepository.DEFAULT_NAMESPACE;
 
-    private static SpringSessionSaveRedisMongoSessionAsSecondary springSessionSaveRedisMongoSessionAsSecondary;
+    private static SpringRedisAsSecondarySession springRedisAsSecondarySession;
 
     private RedisSerializer<Object> defaultRedisSerializer;
 
@@ -35,15 +30,15 @@ public class SpringRedisSessionConfig {
 
     public SpringRedisSessionConfig() {}
 
-    public SpringSessionSaveRedisMongoSessionAsSecondary getSpringRedisOperationsSessionRepository() {
-        if (springSessionSaveRedisMongoSessionAsSecondary != null) {
-            return springSessionSaveRedisMongoSessionAsSecondary;
+    public SpringRedisAsSecondarySession getSpringRedisOperationsSessionRepository() {
+        if (springRedisAsSecondarySession != null) {
+            return springRedisAsSecondarySession;
         }
 
         RedisIndexedSessionRepository sessionRepository = getRedisOperationsSessionRepository();
-        springSessionSaveRedisMongoSessionAsSecondary =
-                new SpringSessionSaveRedisMongoSessionAsSecondary(sessionRepository.getSessionRedisOperations());
-        return springSessionSaveRedisMongoSessionAsSecondary;
+        springRedisAsSecondarySession =
+                new SpringRedisAsSecondarySession(sessionRepository.getSessionRedisOperations());
+        return springRedisAsSecondarySession;
     }
 
     public RedisIndexedSessionRepository getRedisOperationsSessionRepository() {
@@ -59,8 +54,7 @@ public class SpringRedisSessionConfig {
             redisIndexedSessionRepository.setRedisKeyNamespace(this.redisNamespace);
         }
         redisIndexedSessionRepository.setApplicationEventPublisher(this.applicationEventPublisher);
-        int database = resolveDatabase();
-        redisIndexedSessionRepository.setDatabase(database);
+        redisIndexedSessionRepository.setDatabase(RedisIndexedSessionRepository.DEFAULT_DATABASE);
         return redisIndexedSessionRepository;
     }
 
@@ -76,12 +70,6 @@ public class SpringRedisSessionConfig {
         this.redisConnectionFactory = redisConnectionFactoryToUse;
     }
 
-    @Autowired(required = false)
-    @Qualifier("springSessionDefaultRedisSerializer")
-    public void setDefaultRedisSerializer(RedisSerializer<Object> defaultRedisSerializer) {
-        this.defaultRedisSerializer = defaultRedisSerializer;
-    }
-
     private RedisTemplate<String, Object> createRedisTemplate() {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setKeySerializer(new StringRedisSerializer());
@@ -92,17 +80,5 @@ public class SpringRedisSessionConfig {
         redisTemplate.setConnectionFactory(this.redisConnectionFactory);
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
-    }
-
-    private int resolveDatabase() {
-        if (ClassUtils.isPresent("io.lettuce.core.RedisClient", null)
-                && this.redisConnectionFactory instanceof LettuceConnectionFactory) {
-            return ((LettuceConnectionFactory) this.redisConnectionFactory).getDatabase();
-        }
-        if (ClassUtils.isPresent("redis.clients.jedis.Jedis", null)
-                && this.redisConnectionFactory instanceof JedisConnectionFactory) {
-            return ((JedisConnectionFactory) this.redisConnectionFactory).getDatabase();
-        }
-        return RedisIndexedSessionRepository.DEFAULT_DATABASE;
     }
 }

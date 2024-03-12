@@ -1,6 +1,6 @@
 package org.springframework.session.data.mongo;
 
-import org.framework.SpringSessionData;
+import org.framework.data.SpringSessionData;
 import lombok.experimental.UtilityClass;
 import org.springframework.session.Session;
 

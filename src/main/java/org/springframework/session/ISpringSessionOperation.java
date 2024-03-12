@@ -1,7 +1,7 @@
-package org.springframework.session.data;
+package org.springframework.session;
 
 
-import org.framework.SpringSessionData;
+import org.framework.data.SpringSessionData;
 
 public interface ISpringSessionOperation {
     void saveAsSecondary(SpringSessionData springSessionData);
