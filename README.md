@@ -1,9 +1,21 @@
-# Overview
+# Background
+What is Spring Sessions?
 
-The HTTP Session Storage Switcher is a Java application designed to give developers flexibility in how they manage HTTP sessions in their applications. HTTP sessions are like temporary storage areas for user data while they interact with a website or web application.
+Session refers to an HTTP session, which is a mechanism used to maintain state and store data between multiple requests and responses in a web application. The Spring Framework provides tools and components for managing sessions effectively. Spring Session  provides support for managing and integrating HttpSession data with various data stores.
 
-This library allows developers to easily switch between different storage options for these HTTP sessions. The available options include Redis, MongoDB, and JDBC. This library allows you to switch between different storage mechanisms with just a change of property without losing existing session data.
+# Challenges 
+By default Spring Session supports only one Database for eg - Redis,JDBC,Gemfire etc. But the problem is if the Db gets down we can not retrive the sessions again.
 
+# Solutions
+We have implemented multiple storage for sessions for the following reasons :
+1. Fault Tolerance - If the primary storage becomes unavailable due to a failure or outage, the secondary storage can serve as a backup, ensuring continued availability of session data. This redundancy improves fault tolerance and reduces the risk of downtime.
+2. Improved Scalability - By distributing session data across multiple storage mechanisms, you can better handle increases in load and traffic. 
+3. Load Balancing - Utilizing both primary and secondary storage allows for load balancing between the two storage systems.
+4. Disaster Recovery: In the event of a catastrophic failure or data loss in the primary storage, having session data replicated in the secondary storage facilitates quicker recovery and restoration of services. This is crucial for maintaining business continuity and minimizing downtime.
+
+This library is based on the Spring Http Sessions which provide the feature to change the Spring Http Session storage by changing the Spring Session Storage on the basis of property configuration.
+
+This library allows developers to easily switch between different storage options for these HTTP sessions. The available options include Redis, MongoDB, and JDBC.
 
 
 # Features
