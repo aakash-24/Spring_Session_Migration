@@ -12,6 +12,11 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.session.data.redis.config.annotation.SpringSessionRedisConnectionFactory;
 import org.springframework.util.StringUtils;
 
+/**
+ * SpringRedisSessionConfig provides configuration for Spring sessions stored in Redis.
+ * It initializes and configures SpringRedisAsSecondarySession and RedisIndexedSessionRepository.
+ * @author Hunny Kalra, Aakash Jain, Shishir Pandey, Hardik Sharma
+ */
 @Slf4j
 public class SpringRedisSessionConfig {
 
@@ -28,8 +33,15 @@ public class SpringRedisSessionConfig {
 
     private RedisConnectionFactory redisConnectionFactory;
 
+    /**
+     * Constructor for SpringRedisSessionConfig.
+     */
     public SpringRedisSessionConfig() {}
 
+    /**
+     * Retrieves the configured SpringRedisAsSecondarySession.
+     * @return The configured SpringRedisAsSecondarySession.
+     */
     public SpringRedisAsSecondarySession getSpringRedisOperationsSessionRepository() {
         if (springRedisAsSecondarySession != null) {
             return springRedisAsSecondarySession;
@@ -41,6 +53,10 @@ public class SpringRedisSessionConfig {
         return springRedisAsSecondarySession;
     }
 
+    /**
+     * Retrieves the configured RedisIndexedSessionRepository.
+     * @return The configured RedisIndexedSessionRepository.
+     */
     public RedisIndexedSessionRepository getRedisOperationsSessionRepository() {
         if (redisIndexedSessionRepository != null) {
             return redisIndexedSessionRepository;
@@ -58,6 +74,11 @@ public class SpringRedisSessionConfig {
         return redisIndexedSessionRepository;
     }
 
+    /**
+     * Sets the RedisConnectionFactory.
+     * @param springSessionRedisConnectionFactory The RedisConnectionFactory object to use for Spring session.
+     * @param redisConnectionFactory The RedisConnectionFactory object to use.
+     */
     @Autowired
     public void setRedisConnectionFactory(
             @SpringSessionRedisConnectionFactory ObjectProvider<RedisConnectionFactory> springSessionRedisConnectionFactory,
@@ -70,6 +91,10 @@ public class SpringRedisSessionConfig {
         this.redisConnectionFactory = redisConnectionFactoryToUse;
     }
 
+    /**
+     * Creates a RedisTemplate for interacting with Redis.
+     * @return The configured RedisTemplate.
+     */
     private RedisTemplate<String, Object> createRedisTemplate() {
         RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
         redisTemplate.setKeySerializer(new StringRedisSerializer());
@@ -82,3 +107,4 @@ public class SpringRedisSessionConfig {
         return redisTemplate;
     }
 }
+
