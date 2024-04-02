@@ -35,13 +35,13 @@ public class MultiSessionRepository implements SessionRepository {
 
     public SessionRepository getSessionRepositoryBean() {
         if(StringUtils.isNotEmpty(primarystorage) && primarystorage.equals(SpringDataStore.MONGO.name())) {
-            log.info("Primary Storage is MONGO");
+            log.info("MONGO is primary storage");
             return springMongoSessionConfig.getMongoOperationsSessionRepository();
         }else if(StringUtils.isNotEmpty(primarystorage) && primarystorage.equals(SpringDataStore.REDIS.name())){
-            log.info("Primary Storage is REDIS");
+            log.info("REDIS is primary storage");
             return springRedisSessionConfig.getRedisOperationsSessionRepository();
         }else if(StringUtils.isNotEmpty(primarystorage) && primarystorage.equals(SpringDataStore.JDBC.name())){
-            log.info("Primary Storage is JDBC");
+            log.info("RDBMS is primary storage");
             return springRdbmsSessionConfig.getJdbcIndexedSessionRepository();
         }
         log.error("No Primary Storage Configured");
@@ -59,41 +59,43 @@ public class MultiSessionRepository implements SessionRepository {
         SessionRepository sessionRepository = getSessionRepositoryBean();
         log.info("Going to save session");
         sessionRepository.save(session);
-        saveSessionAsSecondary(session);
+        if(secondaryIsEnabled())
+            saveSessionAsSecondary(session);
     }
-
-
+    private boolean secondaryIsEnabled(){
+        return secondarystorageIsEnabled;
+    }
     private void saveSessionAsSecondary(Session session) {
-        if(secondarystorageIsEnabled &&  getSessionRepositoryBean() instanceof MongoIndexedSessionRepository ) {
+        if(getSessionRepositoryBean() instanceof MongoIndexedSessionRepository ) {
             if(!secondarystorage.isEmpty() && secondarystorage.equals(SpringDataStore.JDBC.name())){
-                log.info("Secondary Storage Storage is JDBC");
+                log.info("RDBMS is secondary storage");
                 SpringSessionData springSessionData = SpringMongoSessionConverterUtil.convertToSessionData(session);
                 springRdbmsSessionConfig.getSpringJdbcOperationsSessionRepository().saveAsSecondary(springSessionData);
             }
             else if(!secondarystorage.isEmpty() && secondarystorage.equals(SpringDataStore.REDIS.name())){
-                log.info("Secondary Storage Storage is REDIS");
+                log.info("REDIS is secondary storage");
                 SpringSessionData springSessionData = SpringMongoSessionConverterUtil.convertToSessionData(session);
                 springRedisSessionConfig.getSpringRedisOperationsSessionRepository().saveAsSecondary(springSessionData);
             }
-        }else if(secondarystorageIsEnabled &&  getSessionRepositoryBean() instanceof RedisIndexedSessionRepository){
+        }else if(getSessionRepositoryBean() instanceof RedisIndexedSessionRepository){
             if(!secondarystorage.isEmpty() && secondarystorage.equals(SpringDataStore.MONGO.name())){
-                log.info("Secondary Storage Storage is MONGO");
+                log.info("MONGO is secondary storage");
                 SpringSessionData springSessionData = SpringRedisSessionConverterUtil.convertToSessionData(session);
                 springMongoSessionConfig.getSpringMongoOperationsSessionRepository().saveAsSecondary(springSessionData);
             }
             else if(!secondarystorage.isEmpty() && secondarystorage.equals(SpringDataStore.JDBC.name())){
-                log.info("Secondary Storage Storage is JDBC");
+                log.info("RDBMS is secondary storage");
                 SpringSessionData springSessionData = SpringRedisSessionConverterUtil.convertToSessionData(session);
                 springRdbmsSessionConfig.getSpringJdbcOperationsSessionRepository().saveAsSecondary(springSessionData);
             }
-        }else if (secondarystorageIsEnabled && getSessionRepositoryBean() instanceof JdbcIndexedSessionRepository){
+        }else if (getSessionRepositoryBean() instanceof JdbcIndexedSessionRepository){
             if(!secondarystorage.isEmpty() && secondarystorage.equals(SpringDataStore.REDIS.name())){
-                log.info("Secondary Storage Storage is REDIS");
+                log.info("REDIS is secondary storage");
                 SpringSessionData springSessionData = SpringJdbcSessionConverterUtil.convertToSessionData(session);
                 springRedisSessionConfig.getSpringRedisOperationsSessionRepository().saveAsSecondary(springSessionData);
             }
             else if(!secondarystorage.isEmpty() && secondarystorage.equals(SpringDataStore.MONGO.name())){
-                log.info("Secondary Storage Storage is MONGO");
+                log.info("MONGO is secondary storage");
                 SpringSessionData springSessionData = SpringJdbcSessionConverterUtil.convertToSessionData(session);
                 springMongoSessionConfig.getSpringMongoOperationsSessionRepository().saveAsSecondary(springSessionData);
             }
@@ -112,20 +114,21 @@ public class MultiSessionRepository implements SessionRepository {
         SessionRepository sessionRepository = getSessionRepositoryBean();
         log.info("Going to delete session");
         sessionRepository.deleteById(id);
-        deleteSessionsFromSecondary(id);
+        if(secondaryIsEnabled())
+            deleteSessionsFromSecondary(id);
     }
 
     private void deleteSessionsFromSecondary(String sessionId) {
-        if(secondarystorageIsEnabled && (secondarystorage).equals(SpringDataStore.MONGO.name())){
+        if((secondarystorage).equals(SpringDataStore.MONGO.name())){
             log.info("Going to delete MONGO as secondary session");
             springMongoSessionConfig.getSpringMongoOperationsSessionRepository().deleteById(sessionId);
         }
-        else if(secondarystorageIsEnabled && (secondarystorage).equals(SpringDataStore.REDIS.name())){
+        else if((secondarystorage).equals(SpringDataStore.REDIS.name())){
             log.info("Going to delete REDIS as secondary session");
             springRedisSessionConfig.getRedisOperationsSessionRepository().deleteById(sessionId);
         }
-        else if(secondarystorageIsEnabled && (secondarystorage).equals(SpringDataStore.JDBC.name())){
-            log.info("Going to delete JDBC as secondary session");
+        else if((secondarystorage).equals(SpringDataStore.JDBC.name())){
+            log.info("Going to delete RDBMS as secondary session");
             springRdbmsSessionConfig.getSpringJdbcOperationsSessionRepository().deleteById(sessionId);
         }
     }

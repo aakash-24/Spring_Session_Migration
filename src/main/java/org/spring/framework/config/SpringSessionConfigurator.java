@@ -2,6 +2,8 @@ package org.spring.framework.config;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -19,6 +21,15 @@ import org.springframework.transaction.support.TransactionOperations;
 @Slf4j
 @Configuration
 public class SpringSessionConfigurator extends SpringHttpSessionConfiguration {
+
+    @Value("${spring.session.enable.redis.bean:true}")
+    private boolean enable_redis_bean;
+
+    @Value("${spring.session.enable.mongo.bean:true}")
+    private boolean enable_mongo_bean;
+
+    @Value("${spring.session.enable.rdbms.bean:true}")
+    private boolean enable_jdbc_bean;
 
     @Autowired
     private MongoOperations mongoOperations;
@@ -42,24 +53,30 @@ public class SpringSessionConfigurator extends SpringHttpSessionConfiguration {
     @Bean
     public SessionRepository sessionRepository() {
         MultiSessionRepository multiSessionRepository = new MultiSessionRepository();
-        multiSessionRepository.setSpringMongoSessionConfigs(springMongoSessionConfig());
-        multiSessionRepository.setRedisSessionConfig(springRedisSessionConfig());
-        multiSessionRepository.setJdbcSessionConfig(springRdbmsSessionConfig());
+        if(enable_mongo_bean)
+            multiSessionRepository.setSpringMongoSessionConfigs(springMongoSessionConfig());
+        if(enable_redis_bean)
+            multiSessionRepository.setRedisSessionConfig(springRedisSessionConfig());
+        if (enable_jdbc_bean)
+            multiSessionRepository.setJdbcSessionConfig(springRdbmsSessionConfig());
         log.info("Initialized Multi-Session Repository");
         return multiSessionRepository;
     }
 
     @Bean
+    @ConditionalOnProperty(havingValue= "true",value = "spring.session.enable.redis.bean")
     public SpringRedisSessionConfig springRedisSessionConfig() {
         return new SpringRedisSessionConfig();
     }
 
     @Bean
+    @ConditionalOnProperty(havingValue = "true",value= "spring.session.enable.mongo.bean")
     public SpringMongoSessionConfig springMongoSessionConfig() {
         return new SpringMongoSessionConfig(mongoOperations);
     }
 
     @Bean
+    @ConditionalOnProperty(havingValue= "true", value= "spring.session.enable.rdbms.bean")
     public SpringRdbmsSessionConfig springRdbmsSessionConfig(){
         return new SpringRdbmsSessionConfig(jdbcOperations,transactionOperations);
     }

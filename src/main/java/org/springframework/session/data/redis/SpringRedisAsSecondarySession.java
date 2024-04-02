@@ -4,12 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.spring.framework.data.SpringSessionData;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.session.MapSession;
-import org.springframework.session.ISpringSessionOperation;
+import org.springframework.session.ISessionSaveAsSecondaryOperation;
 
 import java.time.Instant;
 
 @Slf4j
-public class SpringRedisAsSecondarySession extends RedisIndexedSessionRepository implements ISpringSessionOperation {
+public class SpringRedisAsSecondarySession extends RedisIndexedSessionRepository implements ISessionSaveAsSecondaryOperation {
 
     public SpringRedisAsSecondarySession(RedisOperations<String, Object> sessionRedisOperations) {
         super(sessionRedisOperations);
@@ -17,7 +17,7 @@ public class SpringRedisAsSecondarySession extends RedisIndexedSessionRepository
 
     @Override
     public void saveAsSecondary(SpringSessionData springSessionData) {
-        log.info("Going to save session as secondary in redis");
+        log.info("REDIS is set to save secondary session");
         RedisSession session = findById(springSessionData.getId());;
         if (session != null) {
             addAttributesAndSave(springSessionData, session);
@@ -30,7 +30,7 @@ public class SpringRedisAsSecondarySession extends RedisIndexedSessionRepository
         redisSession.setLastAccessedTime(Instant.now());
         redisSession.setLastAccessedTime(Instant.now());
         addAttributesAndSave(springSessionData, redisSession);
-        log.info("Session created as secondary in redis");
+        log.info("Secondary Session is created in REDIS");
     }
 
 
