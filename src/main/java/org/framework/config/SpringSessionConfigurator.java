@@ -35,7 +35,7 @@ public class SpringSessionConfigurator extends SpringHttpSessionConfiguration {
     private boolean enable_mongo_bean;
 
     @Value("${spring.session.enable.rdbms.bean:true}")
-    private boolean enable_jdbc_bean;
+    private boolean enable_rdbms_bean;
 
     @Autowired
     private MongoOperations mongoOperations;
@@ -73,8 +73,8 @@ public class SpringSessionConfigurator extends SpringHttpSessionConfiguration {
             multiSessionRepository.setSpringMongoSessionConfigs(springMongoSessionConfig());
         if(enable_redis_bean)
             multiSessionRepository.setRedisSessionConfig(springRedisSessionConfig());
-        if (enable_jdbc_bean)
-            multiSessionRepository.setJdbcSessionConfig(springRdbmsSessionConfig());
+        if (enable_rdbms_bean)
+            multiSessionRepository.setRdbmsSessionConfig(springRdbmsSessionConfig());
         log.info("Initialized Multi-Session Repository");
         return multiSessionRepository;
     }

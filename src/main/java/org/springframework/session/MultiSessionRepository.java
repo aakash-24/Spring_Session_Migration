@@ -26,7 +26,7 @@ public class MultiSessionRepository implements SessionRepository {
     @Value("${spring.session.primary_storage}")
     private String primarystorage;
 
-    @Value("${spring.session.secondary_storageIsEnabled}")
+    @Value("${spring.session.secondary_storageIsEnabled:false}")
     private boolean secondarystorageIsEnabled;
 
     @Value("${spring.session.secondary_storage}")
@@ -195,7 +195,7 @@ public class MultiSessionRepository implements SessionRepository {
      * Sets the SpringRdbmsSessionConfig bean.
      * @param springRdbmsSessionConfig The SpringRdbmsSessionConfig bean to set.
      */
-    public void setJdbcSessionConfig(SpringRdbmsSessionConfig springRdbmsSessionConfig){
+    public void setRdbmsSessionConfig(SpringRdbmsSessionConfig springRdbmsSessionConfig){
         this.springRdbmsSessionConfig = springRdbmsSessionConfig;
     }
 }
