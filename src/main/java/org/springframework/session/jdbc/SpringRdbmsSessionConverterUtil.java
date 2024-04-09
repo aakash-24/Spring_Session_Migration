@@ -10,7 +10,7 @@ import java.util.Set;
 
 /**
  * SpringRdbmsSessionConverterUtil provides utility methods for converting sessions to SpringSessionData objects.
- * @author Hunny Kalra, Aakash Jain, Shishir Pandey, Hardik Sharma
+ * @author Hardik Sharma
  */
 @UtilityClass
 public class SpringRdbmsSessionConverterUtil {

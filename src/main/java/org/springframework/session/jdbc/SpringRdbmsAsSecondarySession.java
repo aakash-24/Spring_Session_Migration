@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.framework.data.SpringSessionData;
 import org.springframework.jdbc.core.JdbcOperations;
 import org.springframework.session.MapSession;
-import org.springframework.session.ISessionSaveAsSecondaryOperation;
+import org.springframework.session.ISessionSaveAsSecondary;
 import org.springframework.transaction.support.TransactionOperations;
 
 import java.time.Instant;
@@ -12,10 +12,10 @@ import java.time.Instant;
 /**
  * SpringRdbmsAsSecondarySession extends JdbcIndexedSessionRepository and implements ISessionSaveAsSecondaryOperation.
  * This class is responsible for saving session data as a secondary operation in a relational database.
- * @author Hunny Kalra, Aakash Jain, Shishir Pandey, Hardik Sharma
+ * @author Hardik Sharma
  */
 @Slf4j
-public class SpringRdbmsAsSecondarySession extends JdbcIndexedSessionRepository implements ISessionSaveAsSecondaryOperation {
+public class SpringRdbmsAsSecondarySession extends JdbcIndexedSessionRepository implements ISessionSaveAsSecondary {
 
     /**
      * Constructor for SpringRdbmsAsSecondarySession.

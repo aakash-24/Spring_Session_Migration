@@ -15,7 +15,7 @@ import org.springframework.util.StringUtils;
 /**
  * SpringRedisSessionConfig provides configuration for Spring sessions stored in Redis.
  * It initializes and configures SpringRedisAsSecondarySession and RedisIndexedSessionRepository.
- * @author Hunny Kalra, Aakash Jain, Shishir Pandey, Hardik Sharma
+ * @author Aakash Jain
  */
 @Slf4j
 public class SpringRedisSessionConfig {

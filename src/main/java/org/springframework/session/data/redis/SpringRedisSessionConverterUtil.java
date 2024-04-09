@@ -11,7 +11,7 @@ import java.util.Set;
 @UtilityClass
 /**
  * SpringRedisSessionConverterUtil provides utility methods for converting sessions to SpringSessionData objects.
- * @author Hunny Kalra, Aakash Jain, Shishir Pandey, Hardik Sharma
+ * @author Hunny Kalra
  */
 public class SpringRedisSessionConverterUtil {
 

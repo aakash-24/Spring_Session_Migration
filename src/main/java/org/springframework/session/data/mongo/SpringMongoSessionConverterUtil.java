@@ -10,7 +10,7 @@ import java.util.Set;
 
 /**
  * SpringMongoSessionConverterUtil provides utility methods for converting sessions to SpringSessionData objects.
- * @author Hunny Kalra, Aakash Jain, Shishir Pandey, Hardik Sharma
+ * @author Hunny Kalra
  */
 @UtilityClass
 public class SpringMongoSessionConverterUtil {

@@ -2,7 +2,7 @@ package org.framework.data;
 
 /**
  * SpringDataStore enum represents the supported data stores for Spring sessions.
- * @author Hunny Kalra, Aakash Jain, Shishir Pandey, Hardik Sharma
+ * @author Shishir Pandey
  */
 public enum SpringDataStore {
 

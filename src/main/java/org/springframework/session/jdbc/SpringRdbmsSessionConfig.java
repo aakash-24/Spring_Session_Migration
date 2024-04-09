@@ -6,7 +6,7 @@ import org.springframework.transaction.support.TransactionOperations;
 /**
  * SpringRdbmsSessionConfig provides configuration for Spring sessions stored in a relational database.
  * It initializes and configures SpringRdbmsAsSecondarySession and JdbcIndexedSessionRepository.
- * @author Hunny Kalra, Aakash Jain, Shishir Pandey, Hardik Sharma
+ * @author Hardik Sharma
  */
 public class SpringRdbmsSessionConfig {
 

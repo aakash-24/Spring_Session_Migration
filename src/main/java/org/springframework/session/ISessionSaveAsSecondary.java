@@ -4,11 +4,11 @@ package org.springframework.session;
 import org.framework.data.SpringSessionData;
 
 /**
- * ISessionSaveAsSecondaryOperation defines a contract for saving session data as a secondary operation.
+ * ISessionSaveAsSecondary defines a contract for saving session data as a secondary operation.
  * Implementing classes should provide an implementation for the saveAsSecondary method.
- * @author Hunny Kalra, Aakash Jain, Shishir Pandey, Hardik Sharma
+ * @author Hardik Sharma
  */
-public interface ISessionSaveAsSecondaryOperation {
+public interface ISessionSaveAsSecondary {
 
     /**
      * Saves session data as secondary.

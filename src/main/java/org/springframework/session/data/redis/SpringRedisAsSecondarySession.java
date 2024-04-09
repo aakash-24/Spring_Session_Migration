@@ -5,17 +5,17 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.session.MapSession;
-import org.springframework.session.ISessionSaveAsSecondaryOperation;
+import org.springframework.session.ISessionSaveAsSecondary;
 
 import java.time.Instant;
 
 /**
  * SpringRedisAsSecondarySession extends RedisIndexedSessionRepository and implements ISessionSaveAsSecondaryOperation.
  * This class is responsible for saving session data as a secondary operation in Redis.
- * @author Hunny Kalra, Aakash Jain, Shishir Pandey, Hardik Sharma
+ * @author Aakash Jain
  */
 @Slf4j
-public class SpringRedisAsSecondarySession extends RedisIndexedSessionRepository implements ISessionSaveAsSecondaryOperation {
+public class SpringRedisAsSecondarySession extends RedisIndexedSessionRepository implements ISessionSaveAsSecondary {
 
     /**
      * Constructor for SpringRedisAsSecondarySession.

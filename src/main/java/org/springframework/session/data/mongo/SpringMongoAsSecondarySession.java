@@ -4,19 +4,19 @@ package org.springframework.session.data.mongo;
 import org.framework.data.SpringSessionData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.session.ISessionSaveAsSecondaryOperation;
+import org.springframework.session.ISessionSaveAsSecondary;
 
 import java.util.Map;
 
 /**
  * SpringMongoAsSecondarySession extends MongoIndexedSessionRepository and implements ISessionSaveAsSecondaryOperation.
  * This class is responsible for saving session data as a secondary operation in MongoDB.
- * @author Hunny Kalra, Aakash Jain, Shishir Pandey, Hardik Sharma
+ * @author Hunny Kalra
  */
 
 @Slf4j
 public class SpringMongoAsSecondarySession extends MongoIndexedSessionRepository
-        implements ISessionSaveAsSecondaryOperation {
+        implements ISessionSaveAsSecondary {
 
     /**
      * Constructor for SpringMongoAsSecondarySession.

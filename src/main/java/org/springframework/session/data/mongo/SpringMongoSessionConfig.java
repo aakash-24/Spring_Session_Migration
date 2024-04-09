@@ -12,7 +12,7 @@ import java.time.Duration;
 /**
  * SpringMongoSessionConfig provides configuration for Spring sessions stored in MongoDB.
  * It initializes and configures SpringMongoAsSecondarySession and MongoIndexedSessionRepository.
- * @author Hunny Kalra, Aakash Jain, Shishir Pandey, Hardik Sharma
+ * @author Hunny Kalra
  */
 @Slf4j
 public class SpringMongoSessionConfig {

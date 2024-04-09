@@ -22,7 +22,7 @@ import org.springframework.transaction.support.TransactionOperations;
 /**
  * SpringSessionConfigurator configures the Spring session management system based on the configured storage options.
  * It provides beans for session repositories and filters, and initializes session configurations for MongoDB, Redis, and RDBMS.
- * @author Hunny Kalra, Aakash Jain, Shishir Pandey, Hardik Sharma
+ * @author Shishir Pandey
  */
 @Slf4j
 @Configuration

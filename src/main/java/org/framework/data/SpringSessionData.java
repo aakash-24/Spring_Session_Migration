@@ -7,7 +7,7 @@ import java.util.Map;
 
 /**
  * SpringSessionData is a data class representing session data.
- * @author Hunny Kalra, Aakash Jain, Shishir Pandey, Hardik Sharma
+ * @author Aakash Jain
  */
 @Data
 @Setter
