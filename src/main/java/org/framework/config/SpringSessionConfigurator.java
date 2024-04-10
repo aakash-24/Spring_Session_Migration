@@ -69,12 +69,18 @@ public class SpringSessionConfigurator extends SpringHttpSessionConfiguration {
     @Bean
     public SessionRepository sessionRepository() {
         MultiSessionRepository multiSessionRepository = new MultiSessionRepository();
-        if(enable_mongo_bean)
+        if(enable_mongo_bean) {
+            log.info("mongo bean initialized");
             multiSessionRepository.setSpringMongoSessionConfigs(springMongoSessionConfig());
-        if(enable_redis_bean)
+        }
+        if(enable_redis_bean) {
+            log.info("redis bean initialized");
             multiSessionRepository.setRedisSessionConfig(springRedisSessionConfig());
-        if (enable_rdbms_bean)
+        }
+        if (enable_rdbms_bean) {
+            log.info("rdbms bean initialized");
             multiSessionRepository.setRdbmsSessionConfig(springRdbmsSessionConfig());
+        }
         log.info("Initialized Multi-Session Repository");
         return multiSessionRepository;
     }

@@ -99,36 +99,61 @@ public class MultiSessionRepository implements SessionRepository {
             if (getSessionRepositoryBean() instanceof MongoIndexedSessionRepository) {
                 if (secondarystorage.equals(SpringDataStore.RDBMS.name())) {
                     log.info("Secondary Storage Storage is RDBMS");
-                    SpringSessionData springSessionData = SpringMongoSessionConverterUtil.convertToSessionData(session);
-                    springRdbmsSessionConfig.getSpringJdbcOperationsSessionRepository().saveAsSecondary(springSessionData);
+                    SpringSessionData springSessionData = mongoSessionConverter(session);
+                    rdbmsSessionSaveAsSecondary(springSessionData);
                 } else if (secondarystorage.equals(SpringDataStore.REDIS.name())) {
                     log.info("Secondary Storage Storage is REDIS");
-                    SpringSessionData springSessionData = SpringMongoSessionConverterUtil.convertToSessionData(session);
-                    springRedisSessionConfig.getSpringRedisOperationsSessionRepository().saveAsSecondary(springSessionData);
+                    SpringSessionData springSessionData = mongoSessionConverter(session);
+                    redisSessionSaveAsSecondary(springSessionData);
                 }
             } else if (getSessionRepositoryBean() instanceof RedisIndexedSessionRepository) {
                 if (secondarystorage.equals(SpringDataStore.MONGO.name())) {
                     log.info("Secondary Storage Storage is MONGO");
-                    SpringSessionData springSessionData = SpringRedisSessionConverterUtil.convertToSessionData(session);
-                    springMongoSessionConfig.getSpringMongoOperationsSessionRepository().saveAsSecondary(springSessionData);
+                    SpringSessionData springSessionData = redisSessionConverter(session);
+                    mongoSessionSaveAsSecondary(springSessionData);
                 } else if (secondarystorage.equals(SpringDataStore.RDBMS.name())) {
                     log.info("Secondary Storage Storage is RDBMS");
-                    SpringSessionData springSessionData = SpringRedisSessionConverterUtil.convertToSessionData(session);
-                    springRdbmsSessionConfig.getSpringJdbcOperationsSessionRepository().saveAsSecondary(springSessionData);
+                    SpringSessionData springSessionData = redisSessionConverter(session);
+                    rdbmsSessionSaveAsSecondary(springSessionData);
                 }
             } else if (getSessionRepositoryBean() instanceof JdbcIndexedSessionRepository) {
                 if (secondarystorage.equals(SpringDataStore.REDIS.name())) {
                     log.info("Secondary Storage Storage is REDIS");
-                    SpringSessionData springSessionData = SpringRdbmsSessionConverterUtil.convertToSessionData(session);
-                    springRedisSessionConfig.getSpringRedisOperationsSessionRepository().saveAsSecondary(springSessionData);
+                    SpringSessionData springSessionData = rdbmsSessionConverter(session);
+                    redisSessionSaveAsSecondary(springSessionData);
                 } else if (secondarystorage.equals(SpringDataStore.MONGO.name())) {
                     log.info("Secondary Storage Storage is MONGO");
-                    SpringSessionData springSessionData = SpringRdbmsSessionConverterUtil.convertToSessionData(session);
-                    springMongoSessionConfig.getSpringMongoOperationsSessionRepository().saveAsSecondary(springSessionData);
+                    SpringSessionData springSessionData = rdbmsSessionConverter(session);
+                    mongoSessionSaveAsSecondary(springSessionData);
                 }
             }
         }
         log.debug("Secondary Storage is enabled but value not given");
+    }
+
+    private void mongoSessionSaveAsSecondary(SpringSessionData springSessionData) {
+        springMongoSessionConfig.getSpringMongoOperationsSessionRepository().saveAsSecondary(springSessionData);
+    }
+
+    private void redisSessionSaveAsSecondary(SpringSessionData springSessionData) {
+        springRedisSessionConfig.getSpringRedisOperationsSessionRepository().saveAsSecondary(springSessionData);
+
+    }
+
+    private void rdbmsSessionSaveAsSecondary(SpringSessionData springSessionData) {
+        springRdbmsSessionConfig.getSpringJdbcOperationsSessionRepository().saveAsSecondary(springSessionData);
+    }
+
+    private SpringSessionData mongoSessionConverter(Session session) {
+        return SpringMongoSessionConverterUtil.convertToSessionData(session);
+    }
+
+    private SpringSessionData redisSessionConverter(Session session) {
+        return SpringRedisSessionConverterUtil.convertToSessionData(session);
+    }
+
+    private SpringSessionData rdbmsSessionConverter(Session session) {
+        return SpringRdbmsSessionConverterUtil.convertToSessionData(session);
     }
 
     /**
