@@ -32,7 +32,7 @@ public class SpringRdbmsAsSecondarySession extends JdbcIndexedSessionRepository 
      */
     @Override
     public void saveAsSecondary(SpringSessionData springSessionData) {
-        log.info("RDBMS is set to save secondary session");
+        log.info("Rdbms is set to save secondary session");
         JdbcSession session = findById(springSessionData.getId());
         if (session != null) {
             addAttributesAndSave(springSessionData, session);
@@ -44,7 +44,7 @@ public class SpringRdbmsAsSecondarySession extends JdbcIndexedSessionRepository 
         jdbcSession.setMaxInactiveInterval(springSessionData.getMaxInactiveInterval());
         jdbcSession.setLastAccessedTime(Instant.now());
         addAttributesAndSave(springSessionData, jdbcSession);
-        log.info("Session is created in RDBMS");
+        log.info("Session is created in Rdbms");
     }
 
     /**

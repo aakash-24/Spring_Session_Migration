@@ -8,11 +8,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-@UtilityClass
 /**
  * SpringRedisSessionConverterUtil provides utility methods for converting sessions to SpringSessionData objects.
  * @author Hunny Kalra
  */
+@UtilityClass
 public class SpringRedisSessionConverterUtil {
 
     /**

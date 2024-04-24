@@ -1,7 +1,6 @@
 package org.framework.data;
 
 import lombok.*;
-
 import java.time.Duration;
 import java.util.Map;
 

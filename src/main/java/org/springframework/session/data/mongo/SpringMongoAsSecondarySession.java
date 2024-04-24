@@ -1,6 +1,5 @@
 package org.springframework.session.data.mongo;
 
-
 import org.framework.data.SpringSessionData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -34,12 +33,13 @@ public class SpringMongoAsSecondarySession extends MongoIndexedSessionRepository
 
     @Override
     public void saveAsSecondary(SpringSessionData springSessionData) {
-        log.info("MONGO is set to save secondary session");
+        log.info("Mongo is set to save secondary session");
         MongoSession mongoSession = findById(springSessionData.getId());
         if(mongoSession==null){
             mongoSession = new MongoSession(springSessionData.getId(),
                     springSessionData.getMaxInactiveInterval().getSeconds());
-        }else{
+        }
+        else{
             mongoSession.setMaxInactiveInterval(springSessionData.getMaxInactiveInterval());
         }
         Map<String,Object> keys = springSessionData.getAttributes();
@@ -47,7 +47,7 @@ public class SpringMongoAsSecondarySession extends MongoIndexedSessionRepository
             mongoSession.setAttribute(key.getKey(), key.getValue());
         }
         mongoSession.setCreationTime(springSessionData.getCreatedMillis());
-        log.info("Secondary Session is created in MONGO");
+        log.info("Secondary Session is created in Mongo");
         super.save(mongoSession);
     }
 }

@@ -1,6 +1,5 @@
 package org.framework.config;
 
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -29,13 +28,13 @@ import org.springframework.transaction.support.TransactionOperations;
 public class SpringSessionConfigurator extends SpringHttpSessionConfiguration {
 
     @Value("${spring.session.enable.redis.bean:true}")
-    private boolean enable_redis_bean;
+    private boolean ENABLE_REDIS_BEAN;
 
-    @Value("${spring.session.enable.mongo.bean:true}")
-    private boolean enable_mongo_bean;
+    @Value("${spring.session.enable.mongo.bean:false}")
+    private boolean ENABLE_MONGO_BEAN;
 
-    @Value("${spring.session.enable.rdbms.bean:true}")
-    private boolean enable_rdbms_bean;
+    @Value("${spring.session.enable.rdbms.bean:false}")
+    private boolean ENABLE_RDBMS_BEAN;
 
     @Autowired
     private MongoOperations mongoOperations;
@@ -53,6 +52,7 @@ public class SpringSessionConfigurator extends SpringHttpSessionConfiguration {
      * @return The configured session repository filter.
      */
     @Bean
+    @Override
     public <S extends Session> SessionRepositoryFilter
             <? extends Session> springSessionRepositoryFilter
     (SessionRepository<S> sessionRepository) {
@@ -69,16 +69,16 @@ public class SpringSessionConfigurator extends SpringHttpSessionConfiguration {
     @Bean
     public SessionRepository sessionRepository() {
         MultiSessionRepository multiSessionRepository = new MultiSessionRepository();
-        if(enable_mongo_bean) {
-            log.info("mongo bean initialized");
+        if(ENABLE_MONGO_BEAN) {
+            log.info("Mongo bean initialized");
             multiSessionRepository.setSpringMongoSessionConfigs(springMongoSessionConfig());
         }
-        if(enable_redis_bean) {
-            log.info("redis bean initialized");
+        if(ENABLE_REDIS_BEAN) {
+            log.info("Redis bean initialized");
             multiSessionRepository.setRedisSessionConfig(springRedisSessionConfig());
         }
-        if (enable_rdbms_bean) {
-            log.info("rdbms bean initialized");
+        if (ENABLE_RDBMS_BEAN) {
+            log.info("Rdbms bean initialized");
             multiSessionRepository.setRdbmsSessionConfig(springRdbmsSessionConfig());
         }
         log.info("Initialized Multi-Session Repository");
