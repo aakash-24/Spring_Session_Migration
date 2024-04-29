@@ -36,13 +36,13 @@ public class SpringSessionConfigurator extends SpringHttpSessionConfiguration {
     @Value("${spring.session.enable.rdbms.bean:false}")
     private boolean ENABLE_RDBMS_BEAN;
 
-    @Autowired
+    @Autowired(required = false)
     private MongoOperations mongoOperations;
 
-    @Autowired
+    @Autowired(required = false)
     private JdbcOperations jdbcOperations;
 
-    @Autowired
+    @Autowired(required = false)
     private TransactionOperations transactionOperations;
 
     /**

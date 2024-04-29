@@ -52,7 +52,9 @@ public class MultiSessionRepository implements SessionRepository {
                     throw new IllegalArgumentException("Does not match the given primary storage");
             }
         }
-        throw new IllegalArgumentException("No primary storage configuration found");
+        else {
+            throw new IllegalArgumentException("No primary storage configuration found");
+        }
     }
 
     /**
@@ -62,7 +64,6 @@ public class MultiSessionRepository implements SessionRepository {
     @Override
     public Session createSession() {
         log.debug("Storage not configured");
-        log.info("Going to create session");
         return getSessionRepositoryBean().createSession();
     }
 
@@ -73,7 +74,6 @@ public class MultiSessionRepository implements SessionRepository {
     @Override
     public void save(Session session) {
         SessionRepository sessionRepository = getSessionRepositoryBean();
-        log.info("Going to save session");
         sessionRepository.save(session);
         if(secondaryStorageIsEnabled()) {
             saveSessionAsSecondary(session);
