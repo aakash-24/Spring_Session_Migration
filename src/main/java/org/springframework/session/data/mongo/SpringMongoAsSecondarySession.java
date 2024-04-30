@@ -1,28 +1,45 @@
 package org.springframework.session.data.mongo;
 
-
 import org.framework.data.SpringSessionData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.mongodb.core.MongoOperations;
-import org.springframework.session.ISpringSessionOperation;
+import org.springframework.session.ISessionSaveAsSecondary;
 
 import java.util.Map;
 
+/**
+ * SpringMongoAsSecondarySession extends MongoIndexedSessionRepository and implements ISessionSaveAsSecondaryOperation.
+ * This class is responsible for saving session data as a secondary operation in MongoDB.
+ * @author Hunny Kalra
+ */
+
 @Slf4j
 public class SpringMongoAsSecondarySession extends MongoIndexedSessionRepository
-        implements ISpringSessionOperation {
+        implements ISessionSaveAsSecondary {
+
+    /**
+     * Constructor for SpringMongoAsSecondarySession.
+     * @param mongoOperations The MongoOperations object to interact with MongoDB.
+     */
+
     public SpringMongoAsSecondarySession(MongoOperations mongoOperations) {
         super(mongoOperations);
     }
 
+    /**
+     * Saves session data as secondary in MongoDB.
+     * @param springSessionData The SpringSessionData object containing session data to be saved.
+     */
+
     @Override
     public void saveAsSecondary(SpringSessionData springSessionData) {
-        log.info("Going to save session as secondary in mongo");
+        log.info("Mongo is set to save secondary session");
         MongoSession mongoSession = findById(springSessionData.getId());
         if(mongoSession==null){
             mongoSession = new MongoSession(springSessionData.getId(),
                     springSessionData.getMaxInactiveInterval().getSeconds());
-        }else{
+        }
+        else{
             mongoSession.setMaxInactiveInterval(springSessionData.getMaxInactiveInterval());
         }
         Map<String,Object> keys = springSessionData.getAttributes();
@@ -30,7 +47,7 @@ public class SpringMongoAsSecondarySession extends MongoIndexedSessionRepository
             mongoSession.setAttribute(key.getKey(), key.getValue());
         }
         mongoSession.setCreationTime(springSessionData.getCreatedMillis());
-        log.info("Session created as secondary in mongo");
+        log.info("Secondary Session is created in Mongo");
         super.save(mongoSession);
     }
 }

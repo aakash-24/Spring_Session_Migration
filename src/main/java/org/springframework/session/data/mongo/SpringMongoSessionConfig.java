@@ -9,6 +9,11 @@ import org.springframework.util.StringUtils;
 
 import java.time.Duration;
 
+/**
+ * SpringMongoSessionConfig provides configuration for Spring sessions stored in MongoDB.
+ * It initializes and configures SpringMongoAsSecondarySession and MongoIndexedSessionRepository.
+ * @author Hunny Kalra
+ */
 @Slf4j
 public class SpringMongoSessionConfig {
 
@@ -25,14 +30,26 @@ public class SpringMongoSessionConfig {
 
     private final Integer MAX_TIME_INACTIVE_SESSION = 1800;
 
+    /**
+     * Constructor for SpringMongoSessionConfig.
+     * @param mongoOperations The MongoOperations object to interact with MongoDB.
+     */
     public SpringMongoSessionConfig(MongoOperations mongoOperations) {
         this.mongoOperations=mongoOperations;
     }
 
+    /**
+     * Setter for the mongoSessionConverter property.
+     * @param mongoSessionConverter The AbstractMongoSessionConverter object to convert sessions.
+     */
     @Setter
     private AbstractMongoSessionConverter mongoSessionConverter =
             new JdkMongoSessionConverter(Duration.ofSeconds(MAX_TIME_INACTIVE_SESSION));
 
+    /**
+     * Retrieves the configured SpringMongoAsSecondarySession.
+     * @return The configured SpringMongoAsSecondarySession.
+     */
     public SpringMongoAsSecondarySession getSpringMongoOperationsSessionRepository() {
         if (springMongoAsSecondarySession != null) {
             return springMongoAsSecondarySession;
@@ -43,6 +60,10 @@ public class SpringMongoSessionConfig {
         return springMongoAsSecondarySession;
     }
 
+    /**
+     * Retrieves the configured MongoIndexedSessionRepository.
+     * @return The configured MongoIndexedSessionRepository.
+     */
     public MongoIndexedSessionRepository getMongoOperationsSessionRepository() {
         if (mongoIndexedSessionRepository != null) {
             return mongoIndexedSessionRepository;
@@ -53,6 +74,10 @@ public class SpringMongoSessionConfig {
         return mongoIndexedSessionRepository;
     }
 
+    /**
+     * Sets parameters for the MongoIndexedSessionRepository.
+     * @param repository The MongoIndexedSessionRepository to set parameters for.
+     */
     private void setMongoRepositoryParameters(MongoIndexedSessionRepository repository) {
         repository.setMaxInactiveIntervalInSeconds(MAX_TIME_INACTIVE_SESSION);
 
@@ -68,3 +93,4 @@ public class SpringMongoSessionConfig {
         repository.setApplicationEventPublisher(this.applicationEventPublisher);
     }
 }
+
