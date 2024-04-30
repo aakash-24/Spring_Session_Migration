@@ -1,10 +1,10 @@
 # Background
 What is Spring Sessions?
 
-Session refers to an HTTP session, which is a mechanism used to maintain state and store data between multiple requests and responses in a web application. The Spring Framework provides tools and components for managing sessions effectively. Spring Session  provides support for managing and integrating HttpSession data with various data stores.
+A session refers to an HTTP session, which is a mechanism used to maintain state and store data between multiple requests and responses in a web application. The Spring Framework provides tools and components for managing sessions effectively. Spring Session  provides support for managing and integrating HttpSession data with various data stores.
 
 # Challenges 
-By default Spring Session supports only one Database for eg - Redis,JDBC,Gemfire etc. But the problem is if the Db gets down we can not retrive the sessions again.
+By default, Spring Session supports only one Database for eg - Redis, JDBC, Gemfire etc. But the problem is if the DB gets down we can not retrieve the sessions again.
 
 # Solutions
 We have implemented multiple storage for sessions for the following reasons :
@@ -21,7 +21,7 @@ This library allows developers to easily switch between different storage option
 # Features
 1. Supports multiple storage options: Redis, MongoDB, and JDBC. With just a property change you can switch between the storage without losing existing user sessions.
 
-2. Allows configuration of primary and secondary storage in application.properties.
+2. Allows configuration of primary and secondary storage in application properties.
 
 3. Open-source and customizable for integration with various Java applications.
 
@@ -37,11 +37,13 @@ This library allows developers to easily switch between different storage option
 # Configuration
 1. Open the application.properties file located in the src/main/resources directory.
 2. Configure your primary and secondary storage options by setting the following properties:
-    1. Primary storage option (choose one: redis, mongo, jdbc)
-        1. spring.session.primary_storage=REDIS 
-    2. Secondary storage option (choose one: redis, mongo, jdbc)
-        1. spring.session.secondary_storage=MONGO
-3. Provide additional configuration properties for Redis, MongoDB, and JDBC connections.
-4. We can also disable the secondary storage by enabling it to false.
+    1. Primary storage option (choose one: redis, mongo, Rdbms)
+        1. spring.session.primary_storage.name=REDIS 
+    2. Secondary storage option (choose one: redis, mongo, Rdbms)
+        1. spring.session.secondary_storage.name=MONGO
+3. Provide additional configuration properties for Redis, MongoDB, and Rdbms connections.
+4. We can also disable the secondary storage by enabling it to be false.
     1. spring.session.secondary_storageIsEnabled=FALSE
+5. If we don't want to use RDBMS as a storage option in our setup we have to exclude the datasource of the Jdbc 
+    1. spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration 
 
