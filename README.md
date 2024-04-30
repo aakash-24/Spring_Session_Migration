@@ -37,13 +37,13 @@ This library allows developers to easily switch between different storage option
 # Configuration
 1. Open the application.properties file located in the src/main/resources directory.
 2. Configure your primary and secondary storage options by setting the following properties:
-    1. Primary storage option (choose one: redis, mongo, Rdbms)
+    1. Primary storage option (choose one: redis, mongo, RDBMS)
         1. spring.session.primary_storage.name=REDIS 
-    2. Secondary storage option (choose one: redis, mongo, Rdbms)
+    2. Secondary storage option (choose one: redis, mongo, RDBMS)
         1. spring.session.secondary_storage.name=MONGO
 3. Provide additional configuration properties for Redis, MongoDB, and Rdbms connections.
 4. We can also disable the secondary storage by enabling it to be false.
-    1. spring.session.secondary_storageIsEnabled=FALSE
+    1. spring.session.secondary_storage.enabled=FALSE
 5. If we don't want to use RDBMS as a storage option in our setup we have to exclude the datasource of the Jdbc 
     1. spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration 
 
