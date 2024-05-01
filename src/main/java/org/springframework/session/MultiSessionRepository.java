@@ -93,14 +93,12 @@ public class MultiSessionRepository implements SessionRepository {
      * @param session The session to be saved.
      */
     private void saveSessionAsSecondary(Session session) {
-        try{
-            if (!SECONDARYSTORAGE.isEmpty()) {
-                SpringSessionData springSessionData = multiSessionConverter(session);
-                multiSessionSaveAsSecondary(springSessionData);
-            }
+        if (StringUtils.isNotEmpty(SECONDARYSTORAGE)) {
+            SpringSessionData springSessionData = multiSessionConverter(session);
+            multiSessionSaveAsSecondary(springSessionData);
         }
-        catch (Exception e) {
-            throw new IllegalArgumentException("No secondary storage configuration found" + e);
+        else {
+            throw new IllegalArgumentException("No secondary storage configuration found");
         }
     }
 
