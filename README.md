@@ -35,13 +35,13 @@ This library allows developers to easily switch between different storage option
 3. Build the project using Maven
 
 # Configuration
-1. Add the dependency of this project in Pom of our project and build it respectively.
+1. Add the dependency of this project in the Pom of your project and build it respectively.
 2. Open the application.properties file located in the src/main/resources directory.
 3. Configure your primary and secondary storage options by setting the following properties:
     1. Primary storage option (choose one: Redis, Mongo, or RDBMS)
         1. spring.session.primary_storage.name=REDIS
     2. Secondary storage option (choose one: Redis, Mongo, or RDBMS)
-        2. spring.session.secondary_storage.name=MONGO
+        1. spring.session.secondary_storage.name=MONGO
 4. Provide additional configuration properties for Redis, MongoDB, and Rdbms connections.
 5. We can also disable secondary storage by enabling it to be false.
     1. spring.session.secondary_storage.enabled=FALSE
